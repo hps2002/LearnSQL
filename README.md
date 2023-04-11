@@ -24,17 +24,17 @@ select * from tab_a;可以看作是一个表， 所以可以将这个查询出�
 * >= 和 <=  分别为大于等于运算符和小于等于运算符，作用类似大于和小于运算符;
 
 ## 非符号运算符
-IS NULL         为空运算符      select * from table where A is NULL;      
-IS NOT NULL     不为空运算符    select * from table where A IS NOT NULL;
-LEAST           最小值运算符    select * from table where C least(A, B);
-GREATEST        最大值运算符    select * from table where C greatest(A, B);
-BETWEEN AND     两值之间运算符  select * from table where C between A and B;//闭区间[A, B]
-ISNULL          为空运算符      select * from table where C isnull;
-IN              属于运算符      select * from table where A in (C, B);
-NOT IN          不属于运算符    select * from table where A not in (C, B);
-LIKE            模糊匹配        select * from table where A like B;
-REGEXP          正则表达式      select * from table where A regexp B;
-RLIKE           正则表达式      select * from table where A rlike B;
+* IS NULL         为空运算符      select * from table where A is NULL;      
+* IS NOT NULL     不为空运算符    select * from table where A IS NOT NULL;
+* LEAST           最小值运算符    select * from table where C least(A, B);
+* GREATEST        最大值运算符    select * from table where C greatest(A, B);
+* BETWEEN AND     两值之间运算符  select * from table where C between A and B;//闭区间[A, B]
+* ISNULL          为空运算符      select * from table where C isnull;
+* IN              属于运算符      select * from table where A in (C, B);
+* NOT IN          不属于运算符    select * from table where A not in (C, B);
+* LIKE            模糊匹配        select * from table where A like B;
+* REGEXP          正则表达式      select * from table where A regexp B;
+* RLIKE           正则表达式      select * from table where A rlike B;
 
 ## 运算符优先级
 括号的优先级最大，赋值的优先级最低 （具体查看mysql运算符优先级表）
@@ -42,7 +42,7 @@ RLIKE           正则表达式      select * from table where A rlike B;
 ##  使用正则表达式查询
 正则表达式被用来检索或者替换某个模式的文本内容，根据指定的匹配模式匹配文本中符合要求的特殊字符串。
 *  ^, 匹配文本的开始字符串     '^b'匹配以字母b开头的字符串
-*  $, 匹配文本的结束字符串     'st$'匹配以st结束的字符串
+*  '$', 匹配文本的结束字符串     'st$'匹配以st结束的字符串
 *  ., 匹配任何单个字符         'b.k'匹配任何b和k之间有一个字符的字符串
 *  *, 匹配0个或多个在它前面的字符串     'f * n'匹配n前面有任意和f的字符串
 *  +, 匹配前面的字符一次或多次  'ba+'匹配以b开头后面紧跟a的字符串
