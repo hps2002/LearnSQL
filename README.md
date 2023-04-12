@@ -24,17 +24,17 @@ select * from tab_a;可以看作是一个表， 所以可以将这个查询出�
 * >= 和 <=  分别为大于等于运算符和小于等于运算符，作用类似大于和小于运算符;
 
 ## 非符号运算符
-* IS NULL         为空运算符      select * from table where A is NULL;      
-* IS NOT NULL     不为空运算符    select * from table where A IS NOT NULL;
-* LEAST           最小值运算符    select * from table where C least(A, B);
-* GREATEST        最大值运算符    select * from table where C greatest(A, B);
-* BETWEEN AND     两值之间运算符  select * from table where C between A and B;//闭区间[A, B]
-* ISNULL          为空运算符      select * from table where C isnull;
-* IN              属于运算符      select * from table where A in (C, B);
-* NOT IN          不属于运算符    select * from table where A not in (C, B);
-* LIKE            模糊匹配        select * from table where A like B;
-* REGEXP          正则表达式      select * from table where A regexp B;
-* RLIKE           正则表达式      select * from table where A rlike B;
+* IS NULL&emsp;为空运算符&emsp;select * from table where A is NULL;      
+* IS NOT NULL&emsp;不为空运算符&emsp;select * from table where A IS NOT NULL;
+* LEAST &emsp;最小值运算符&emsp;select * from table where C least(A, B);
+* GREATEST&emsp;最大值运算符&emsp;select * from table where C greatest(A, B);
+* BETWEEN AND &emsp;两值之间运算符&emsp;select * from table where C between A and B;//闭区间[A, B]
+* ISNULL&emsp;为空运算符&emsp;select * from table where C isnull;
+* IN&emsp;属于运算符&emsp;select * from table where A in (C, B);
+* NOT IN&emsp;不属于运算符&emsp;select * from table where A not in (C, B);
+* LIKE&emsp;模糊匹配&emsp;select * from table where A like B;
+* REGEXP&emsp;正则表达式&emsp;select * from table where A regexp B;
+* RLIKE&emsp;正则表达式&emsp;select * from table where A rlike B;
 
 ## 运算符优先级
 括号的优先级最大，赋值的优先级最低 （具体查看mysql运算符优先级表）
@@ -51,3 +51,12 @@ select * from tab_a;可以看作是一个表， 所以可以将这个查询出�
 *  [^], 匹配不包含括号内的任何一个字符  '[^abc]匹配不包含a或者b或者c的字符串
 *  指定字符串{n}，匹配前面的字符串至少n次   b{2}匹配至少有2个b的字符串
 *  指定字符串{n, m}, 匹配前面的字符串至少n次，至多m次   str{2, 3}匹配至少2个，最多3个的字符串
+
+## 排序
+使用orderby子句进行排序：ASC（升序）、DESC（降序），order by在select语句的结尾
+* 单列排序
+直接在order by后面进行排序的对象中直接使用升序或者降序进行输出即可：select id, name from table ORDER BY id ASC;
+* 多列排序
+多列排序的时候，只有在第一列的值相同的情况下第二列的排序才会触发
+
+## 分页
