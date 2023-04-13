@@ -172,3 +172,59 @@ FROM a.id, b.name FROM a JOIN b UNSIG (id);
 * where适用于所有关联查询
 * ON只能和JOIN一起使用
 * UNSIG只能和JOIN一起使用
+
+## 单行函数
+在MySQL中字符串的下标从1开始
+
+单行函数
+* 操作数据对象
+* 接收参数返回一个结果
+* 只对一行进行变换
+* 每行返回一个结果
+* 可以嵌套
+* 参数可以是一列或一个值
+
+函数一般是数据库中的内嵌函数
+包括数值函数、字符串函数、日期和时间函数、流程控制函数、加密解密函数、MySQL信息函数、其他函数
+
+这些内置的库函数主打一个熟能生巧
+
+## 聚合函数
+聚合函数通常配合 Group By使用
+聚合函数不能嵌套调用，如：AVG(SUM(字段))是不允许的
+
+常用的聚合函数
+SUM()对数值求和函数、COUNT()求记录条数、AVG()求平均数、MAX()求最大值、MIN()求最小值
+
+GROUP BY可以将表中的数据分成若干组，但是GROUP BY要在WHERE后面使用，因为分组之前要先筛选过滤条件
+GROUP BY还可以对多个列进行分组
+在GROUP BY之后可以使用WITH ROLLUP，使用这个关键字之后再分组记录后增加一条记录，该记录查询出所有记录的总和，即统计记录数量，但是使用了WITH ROLLUP之后不能使用ORDER BY对结果进行排序
+
+HAVING
+HAVING是在使用GROUP BY分组之后对分组之后的集合进行过滤输出满足HAVING的条件
+
+**HAVING与WHERE的区别**
+having是先连接后筛选，where是先筛选后连接
+但是having能使用分组中的计算函数，where不能使用分组中的计算函数。
+
+## 查询语句的执行过程
+语句结构：
+SELECT ... FROM ... WHERE ... AND/OR ... GROUP BY ... HAVING ... ORDER BY ...  LIMIT...
+或者
+SELECT ... FROM ... JOIN ... ON ... WHERE ... AND/OR ... GROUP BY ... HAVING ... ORDER BY ... LIMIT
+以上关键字的顺序不能颠倒
+
+查询语句执行的顺序：
+先执行from引入要查询的所有表，如果是多表查询会先连接表（通过内连接、或者外连接），处理完所有表之后得到一张逻辑上的新表
+
+然后执行where进行筛选过滤，再次得到一张逻辑上的新表
+
+然后执行group by对表进行分组，这里再次得到一张逻辑上的表，如果没有group by的话就不进行分组
+
+然后执行having再次过滤，再次得到一张新表
+
+然后执行select 中要显示的字段，这里再次得到一张新表
+
+然后Order by进行排序，LIMIT进行分页
+
+最后输出就是要查找的集合
