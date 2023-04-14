@@ -228,3 +228,68 @@ SELECT ... FROM ... JOIN ... ON ... WHERE ... AND/OR ... GROUP BY ... HAVING ...
 然后Order by进行排序，LIMIT进行分页
 
 最后输出就是要查找的集合
+
+## 子查询
+子查询是指在查询语句的内部嵌套另一个查询语句
+注意事项：
+* 子查询要包含在括号内；
+* 将子查询放在比较条件的右侧；
+* 单行操作符对应单行子查询，多行操作符对应多行子查询；
+* 单行子查询是指从查询到的结果返回的是一个值，且上一层的查询能够以这个结果作为筛选条件，得出下一个表。
+* 多行子查询是指在子查询中返回多个记录条数，作为上一层的筛选条件，也可以看作是通过子查询得到一张新的表，从这个表里面使用多行操作符查找想要的记录
+* 相关联子查询：如果子查询需要执行多次，即采用循环的方式，先从外部查询开始，每次都传入子查询进行查询，然后将结果反馈给外部，这种嵌套的执行方式称为相关子查询。
+* 不相关联子查询：子查询中查询了数据结果，如果这个数据结果只查询了一次，然后这个数据结果作为主查询的条件进行执行，那么这样的子查询叫做不相关子查询。
+
+在单行子查询中使用多行运算符会报错；
+
+多行子查询的运算符要配合单行子查询使用：IN, ANY, ALL, SOME
+例如，返回其他job_id，中比job_id为"IT_PORT"部门任一工资低的员工号、姓名、job_id、以及salary
+```
+select employee_id, last_name, job_id, salary
+from employees
+where salary < ANY
+                    (select salary
+                    from employees
+                    where job_id = 'IT_PORT'
+                    )
+AND job_id != 'IT_PORT';
+```
+返回其他job_id中比job_id为'IT_PORT'部门所有工资都低的员工号、姓名、job_id以及salary
+```
+select employees_id, name, job_id, salary
+from employees
+where salary < ALL
+                    (select salary
+                    from employees
+                    where job_id = 'IT_PORT'
+                    )
+AND job_id != 'IT_PORT';
+```
+对于单行子查询和多行子查询来说，都是不返回空值的
+
+### 相关联子查询
+在子查询中需要依赖外部表的情况就叫做相关联子查询
+
+在from中，order by中都可以使用，具体的使用要结合实际的情况构造查询算法
+
+EXISTS和NOT EXISTS关键字<br>
+关联子查询中使用EXISIS操作符一起使用，用来检查子查询中是否存在满足条件的行<br>
+* 如果子查询中不存在满足条件的行，条件返回false，继续在子查询中查找；
+* 如果子查询中存在满足条件的行，不在子查询中查找，条件返回true
+
+```
+select id, name 
+from emp e1
+where exists 
+(
+    select * from emp e2 where man_id = e1.id    
+);
+```
+
+### 总结
+子查询除了用于查询语句还可以用于更新、删除、修改表结构
+
+如果自连接和子查询中选，选自连接
+
+因为自连接是通过已知的自身数据表进行条件判断，而子查询实际是通过对未知表查询后进行的条件判断，大部分DBMS都对自连接处理进行优化
+
